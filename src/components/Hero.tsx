@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
@@ -52,12 +52,11 @@ const Hero = () => {
           </motion.div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            Engineering the Future of
-            <span className="block text-accent">Sony Innovation</span>
+            SARD India: Your Center of Excellence
           </h1>
 
           <p className="text-xl md:text-2xl text-white/90 mb-12 leading-relaxed max-w-3xl mx-auto">
-            SARD India delivers world-class engineering solutions across PlayStation, Television, Camera, and emerging technologies.
+            Delivering world-class engineering solutions across PlayStation, Television, Camera, and emerging technologies
           </p>
 
           <motion.div
@@ -70,7 +69,7 @@ const Hero = () => {
               size="lg"
               className="bg-white text-primary-dark hover:bg-white/90 text-lg px-8 py-6 shadow-strong group"
             >
-              Explore Our Work
+              Explore Our Capabilities
               <motion.div
                 className="inline-block ml-2"
                 animate={{ x: [0, 5, 0] }}
@@ -84,8 +83,7 @@ const Hero = () => {
               variant="outline"
               className="border-2 border-white text-white hover:bg-white/10 text-lg px-8 py-6"
             >
-              <Play className="w-5 h-5 mr-2" />
-              Watch Video
+              Connect With Us
             </Button>
           </motion.div>
 
@@ -97,10 +95,10 @@ const Hero = () => {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20"
           >
             {[
-              { value: "800+", label: "Engineers" },
-              { value: "15+", label: "Years Legacy" },
-              { value: "50+", label: "Patents Filed" },
-              { value: "4", label: "Core Domains" },
+              { value: "450+", label: "Engineers" },
+              { value: "15+", label: "Active Projects" },
+              { value: "5", label: "Sony Verticals" },
+              { value: "8", label: "Technology Domains" },
             ].map((stat, index) => (
               <motion.div
                 key={index}

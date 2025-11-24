@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Users, Trophy, Lightbulb, Target } from "lucide-react";
+import { Users, FolderKanban, Building2, Code2 } from "lucide-react";
 
 const MetricsSection = () => {
   const ref = useRef(null);
@@ -10,30 +10,30 @@ const MetricsSection = () => {
   const metrics = [
     {
       icon: Users,
-      value: "800+",
-      label: "Expert Engineers",
-      description: "Highly skilled professionals driving innovation across multiple domains",
+      value: "450+",
+      label: "Engineers",
+      description: "Specialized engineers across PlayStation, TV, Camera, Audio and emerging tech delivering end‑to‑end product development.",
       color: "from-blue-500 to-cyan-500"
     },
     {
-      icon: Trophy,
-      value: "50+",
-      label: "Patents Filed",
-      description: "Cutting-edge innovations protecting intellectual property",
+      icon: FolderKanban,
+      value: "15+",
+      label: "Active Projects",
+      description: "Ongoing product innovation programs covering cloud, AI/ML, platform engineering and experience modernization.",
       color: "from-purple-500 to-pink-500"
     },
     {
-      icon: Lightbulb,
-      value: "100+",
-      label: "Active Projects",
-      description: "Concurrent development initiatives across all verticals",
+      icon: Building2,
+      value: "5",
+      label: "Sony Verticals",
+      description: "Strategic engagements with key Sony business units including SIE, SSS, Home Entertainment and Imaging.",
       color: "from-amber-500 to-orange-500"
     },
     {
-      icon: Target,
-      value: "15+",
-      label: "Years Excellence",
-      description: "Proven track record of delivering world-class solutions",
+      icon: Code2,
+      value: "8",
+      label: "Technology Domains",
+      description: "Expertise spanning cloud, embedded, AI/ML, DevOps, frontend, backend, mobile and platform engineering.",
       color: "from-green-500 to-emerald-500"
     },
   ];
@@ -48,10 +48,10 @@ const MetricsSection = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-4">
-            Our Impact in Numbers
+            Our Journey
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Building excellence through innovation, dedication, and world-class engineering talent
+            A decade of innovation, growth, and excellence in engineering
           </p>
         </motion.div>
 
@@ -91,8 +91,8 @@ const MetricsSection = () => {
                   <h3 className="text-xl font-semibold text-foreground mb-3">
                     {metric.label}
                   </h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    {metric.description}
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {metric.description} <strong className="text-primary">View more</strong>
                   </p>
                 </div>
 

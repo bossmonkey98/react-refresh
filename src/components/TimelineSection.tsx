@@ -1,6 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Calendar, Award, Rocket, Zap } from "lucide-react";
+import { Rocket, Trophy, TrendingUp, Cloud, Award, Globe } from "lucide-react";
 
 const TimelineSection = () => {
   const ref = useRef(null);
@@ -8,54 +8,46 @@ const TimelineSection = () => {
 
   const milestones = [
     {
-      year: "2008",
-      title: "SARD India Founded",
-      description: "Established as Sony's premier R&D center in India, focusing on audio and video technologies.",
+      year: "2015",
+      title: "Established",
+      description: "Started with 25 engineers",
       icon: Rocket,
     },
     {
-      year: "2012",
-      title: "PlayStation Integration",
-      description: "Expanded capabilities to include PlayStation development, becoming a key contributor to gaming innovation.",
+      year: "2017",
+      title: "PlayStation Excellence",
+      description: "Expanded to 50+ engineers, first PS4 project",
+      icon: Trophy,
+    },
+    {
+      year: "2019",
+      title: "Multi-Domain Growth",
+      description: "120 engineers across TV, Camera, PS",
+      icon: TrendingUp,
+    },
+    {
+      year: "2021",
+      title: "Cloud & AI Integration",
+      description: "200+ engineers, launched AI initiatives",
+      icon: Cloud,
+    },
+    {
+      year: "2023",
+      title: "Center of Excellence",
+      description: "350+ engineers, 15+ active projects",
       icon: Award,
     },
     {
-      year: "2016",
-      title: "Camera Excellence",
-      description: "Launched dedicated camera division, contributing to Alpha series and professional imaging solutions.",
-      icon: Zap,
-    },
-    {
-      year: "2020",
-      title: "AI & Machine Learning",
-      description: "Pioneered AI-driven features across all domains, setting new standards for smart technology.",
-      icon: Calendar,
-    },
-    {
-      year: "2024",
-      title: "800+ Engineers Strong",
-      description: "Reached milestone of 800+ engineers, making us one of Sony's largest R&D centers globally.",
-      icon: Award,
+      year: "2025",
+      title: "Global Recognition",
+      description: "450+ engineers, working with 5 Sony verticals",
+      icon: Globe,
     },
   ];
 
   return (
     <section ref={ref} className="py-24 bg-background">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-20"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-4">
-            Our Journey of Excellence
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            15+ years of innovation, growth, and technological breakthroughs
-          </p>
-        </motion.div>
-
         <div className="relative">
           {/* Timeline Line */}
           <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary via-primary-light to-accent hidden lg:block" />
