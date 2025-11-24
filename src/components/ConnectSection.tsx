@@ -1,9 +1,16 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Mail, MapPin, Phone, Send } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const ConnectSection = () => {
   const ref = useRef(null);
@@ -11,106 +18,203 @@ const ConnectSection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
+    alert("Thank you for your message! We will get back to you soon.");
   };
 
-  return (
-    <section ref={ref} id="connect" className="py-24 bg-gradient-to-br from-primary-dark via-primary to-primary-light relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(30deg, rgba(255,255,255,0.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.1) 87.5%),
-            linear-gradient(150deg, rgba(255,255,255,0.1) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.1) 87.5%)
-          `,
-          backgroundSize: '80px 140px',
-          backgroundPosition: '0 0, 40px 70px'
-        }} />
-      </div>
+  const onboardingSteps = [
+    {
+      number: 1,
+      title: "Initial Consultation",
+      duration: "Duration: 1 week",
+      description: "Understanding your project requirements, technical needs, and business objectives.",
+    },
+    {
+      number: 2,
+      title: "Requirement Analysis",
+      duration: "Duration: 2 weeks",
+      description: "Detailed technical assessment, feasibility study, and solution architecture design.",
+    },
+    {
+      number: 3,
+      title: "Team Setup",
+      duration: "Duration: 2-3 weeks",
+      description: "Assembling the right team, infrastructure setup, and tool configuration.",
+    },
+    {
+      number: 4,
+      title: "Project Kickoff",
+      duration: "Duration: 1 week",
+      description: "Sprint planning, knowledge transfer, and beginning active development.",
+    },
+  ];
 
-      <div className="container mx-auto px-6 relative z-10">
+  return (
+    <section ref={ref} id="connect" className="py-24 bg-secondary">
+      <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Let's Build the Future Together
+          <h2 className="text-4xl md:text-5xl font-bold text-primary-dark mb-4">
+            Start Your Journey With SARD
           </h2>
-          <p className="text-lg text-white/90 max-w-2xl mx-auto">
-            Get in touch with our team to explore collaboration opportunities
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            Let's build something exceptional together
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          {/* Contact Form */}
+          {/* Onboarding Process */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-white rounded-2xl p-8 shadow-strong"
+            className="bg-card rounded-2xl p-8 shadow-soft border border-border"
           >
-            <h3 className="text-2xl font-bold text-foreground mb-6">
-              Send us a message
+            <h3 className="text-2xl font-bold text-primary-dark mb-8">
+              Onboarding Process
             </h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">
-                    First Name
-                  </label>
-                  <Input
-                    type="text"
-                    placeholder="John"
-                    className="w-full"
-                    required
-                  />
+
+            <div className="space-y-8 relative">
+              {/* Timeline line */}
+              <div className="absolute left-[14px] top-4 bottom-4 w-0.5 bg-primary/30" />
+
+              {onboardingSteps.map((step, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : {}}
+                  transition={{ delay: 0.4 + index * 0.1 }}
+                  className="relative pl-12"
+                >
+                  <div className="absolute left-0 top-1 w-7 h-7 bg-primary rounded-full flex items-center justify-center text-white text-sm font-bold shadow-soft z-10">
+                    {step.number}
+                  </div>
+                  <h4 className="text-lg font-semibold text-foreground mb-1">
+                    {step.title}
+                  </h4>
+                  <p className="text-sm text-primary font-medium mb-2">
+                    {step.duration}
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {step.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Contact Info */}
+            <div className="mt-8 pt-8 border-t border-border space-y-4">
+              <div className="flex items-start gap-3">
+                <Mail className="w-5 h-5 text-primary mt-0.5" />
+                <div className="text-sm text-muted-foreground">
+                  sard.india@sony.com
                 </div>
-                <div>
-                  <label className="text-sm font-medium text-foreground mb-2 block">
-                    Last Name
-                  </label>
-                  <Input
-                    type="text"
-                    placeholder="Doe"
-                    className="w-full"
-                    required
-                  />
+              </div>
+              <div className="flex items-start gap-3">
+                <Phone className="w-5 h-5 text-primary mt-0.5" />
+                <div className="text-sm text-muted-foreground">
+                  +91 80 4040 8000
                 </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 text-primary mt-0.5" />
+                <div className="text-sm text-muted-foreground">
+                  Sony India Software Centre Pvt. Ltd.<br />
+                  Bangalore, Karnataka, India
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="bg-card rounded-2xl p-8 shadow-soft border border-border"
+          >
+            <h3 className="text-2xl font-bold text-primary-dark mb-6">
+              Get In Touch
+            </h3>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Full Name *
+                </label>
+                <Input
+                  type="text"
+                  placeholder="John Doe"
+                  required
+                />
               </div>
 
               <div>
                 <label className="text-sm font-medium text-foreground mb-2 block">
-                  Email
+                  Email Address *
                 </label>
                 <Input
                   type="email"
                   placeholder="john.doe@example.com"
-                  className="w-full"
                   required
                 />
               </div>
 
               <div>
                 <label className="text-sm font-medium text-foreground mb-2 block">
-                  Subject
+                  Company Name
                 </label>
                 <Input
                   type="text"
-                  placeholder="How can we help you?"
-                  className="w-full"
-                  required
+                  placeholder="Sony Corporation"
                 />
               </div>
 
               <div>
                 <label className="text-sm font-medium text-foreground mb-2 block">
-                  Message
+                  Sony Vertical
+                </label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Vertical" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="sie">Sony Interactive Entertainment</SelectItem>
+                    <SelectItem value="sss">Sony Semiconductor Solutions</SelectItem>
+                    <SelectItem value="home">Sony Home Entertainment</SelectItem>
+                    <SelectItem value="imaging">Sony Imaging Products & Solutions</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Project Type
+                </label>
+                <Select>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select Project Type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="new">New Development</SelectItem>
+                    <SelectItem value="enhancement">Enhancement/Feature Add</SelectItem>
+                    <SelectItem value="maintenance">Maintenance & Support</SelectItem>
+                    <SelectItem value="consulting">Consulting</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Message *
                 </label>
                 <Textarea
-                  placeholder="Tell us more about your inquiry..."
-                  className="w-full min-h-[120px]"
+                  placeholder="Tell us about your project requirements..."
+                  className="min-h-[120px]"
                   required
                 />
               </div>
@@ -120,87 +224,9 @@ const ConnectSection = () => {
                 className="w-full bg-primary hover:bg-primary-dark text-white"
                 size="lg"
               >
-                <Send className="w-5 h-5 mr-2" />
                 Send Message
               </Button>
             </form>
-          </motion.div>
-
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="space-y-8"
-          >
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <h3 className="text-2xl font-bold text-white mb-6">
-                Contact Information
-              </h3>
-              <div className="space-y-6">
-                <motion.div
-                  whileHover={{ x: 10 }}
-                  className="flex items-start gap-4"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-white font-semibold mb-1">Address</div>
-                    <p className="text-white/80 text-sm leading-relaxed">
-                      Sony India Software Centre Pvt. Ltd.<br />
-                      Bangalore, Karnataka, India
-                    </p>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  whileHover={{ x: 10 }}
-                  className="flex items-start gap-4"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-white font-semibold mb-1">Email</div>
-                    <p className="text-white/80 text-sm">
-                      careers@sard.sony.co.in
-                    </p>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  whileHover={{ x: 10 }}
-                  className="flex items-start gap-4"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-white font-semibold mb-1">Phone</div>
-                    <p className="text-white/80 text-sm">
-                      +91 80 XXXX XXXX
-                    </p>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20">
-              <h3 className="text-xl font-bold text-white mb-4">
-                Join Our Team
-              </h3>
-              <p className="text-white/80 text-sm mb-6 leading-relaxed">
-                We're always looking for talented engineers passionate about innovation.
-                Explore career opportunities at SARD India.
-              </p>
-              <Button
-                variant="outline"
-                className="border-2 border-white text-white hover:bg-white hover:text-primary w-full"
-              >
-                View Open Positions
-              </Button>
-            </div>
           </motion.div>
         </div>
       </div>

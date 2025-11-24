@@ -16,10 +16,13 @@ const Header = () => {
   }, []);
 
   const navLinks = [
-    { href: "#about", label: "About" },
-    { href: "#excellence", label: "Excellence" },
+    { href: "#home", label: "Home" },
+    { href: "#journey", label: "Journey" },
+    { href: "#technical", label: "Technical" },
     { href: "#domains", label: "Domains" },
-    { href: "#case-studies", label: "Case Studies" },
+    { href: "#devices", label: "Devices" },
+    { href: "#verticals", label: "Verticals" },
+    { href: "#capabilities", label: "Capabilities" },
     { href: "#connect", label: "Connect" },
   ];
 
@@ -42,7 +45,7 @@ const Header = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <span className="text-2xl font-bold text-primary-dark">SARD INDIA</span>
+            <span className="text-2xl font-bold text-primary-dark">SARD</span>
             <span className="text-[10px] tracking-widest text-muted-foreground uppercase">
               Sony Audio Research & Development
             </span>
