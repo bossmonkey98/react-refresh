@@ -1,12 +1,15 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ChevronDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 const VerticalsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [expandedVertical, setExpandedVertical] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   const verticals = [
     {
@@ -157,6 +160,19 @@ const VerticalsSection = () => {
                           </Badge>
                         ))}
                       </div>
+                    </div>
+
+                    {/* Know More Button */}
+                    <div className="flex justify-center pt-4">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/vertical/${vertical.name.split(' - ')[0].toLowerCase().replace(/\s+/g, '-')}`);
+                        }}
+                        className="bg-primary hover:bg-primary-dark text-white"
+                      >
+                        Know More
+                      </Button>
                     </div>
                   </div>
                 </motion.div>

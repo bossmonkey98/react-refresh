@@ -1,10 +1,12 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Users, Shield, Globe, GraduationCap, Zap, ClipboardCheck, Lightbulb, DollarSign } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const WhyPartnerSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const differentiators = [
     {
@@ -58,7 +60,7 @@ const WhyPartnerSection = () => {
   ];
 
   return (
-    <section ref={ref} className="py-24 bg-background">
+    <section id="why-partner" ref={ref} className="py-24 bg-background relative overflow-hidden">
       <div className="container mx-auto px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -74,36 +76,73 @@ const WhyPartnerSection = () => {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="relative max-w-4xl mx-auto" style={{ height: "600px" }}>
           {differentiators.map((item, index) => {
             const Icon = item.icon;
+            const offset = index - activeIndex;
+            const isActive = index === activeIndex;
+            
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 30 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: index * 0.08 }}
-                whileHover={{ y: -6, scale: 1.02 }}
-                className="bg-card rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 border border-border group"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{
+                  opacity: isInView ? (Math.abs(offset) < 3 ? 1 - Math.abs(offset) * 0.3 : 0) : 0,
+                  scale: isActive ? 1 : 0.9 - Math.abs(offset) * 0.05,
+                  y: offset * 20,
+                  zIndex: differentiators.length - Math.abs(offset),
+                  rotateX: offset * -2,
+                }}
+                transition={{ duration: 0.5 }}
+                className="absolute inset-0 mx-auto w-full max-w-2xl"
+                style={{
+                  transformStyle: "preserve-3d",
+                  perspective: "1000px",
+                }}
               >
-                <motion.div
-                  whileHover={{ rotate: 360, scale: 1.1 }}
-                  transition={{ duration: 0.6 }}
-                  className={`w-14 h-14 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4 shadow-soft`}
-                >
-                  <Icon className="w-7 h-7 text-white" />
-                </motion.div>
+                <div className="bg-card rounded-2xl p-8 shadow-elevated border border-border h-full flex flex-col">
+                  <motion.div
+                    whileHover={{ rotate: 360, scale: 1.1 }}
+                    transition={{ duration: 0.6 }}
+                    className={`w-16 h-16 rounded-xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-6 shadow-soft`}
+                  >
+                    <Icon className="w-8 h-8 text-white" />
+                  </motion.div>
 
-                <h3 className="text-lg font-bold text-foreground mb-3">
-                  {item.title}
-                </h3>
+                  <h3 className="text-2xl font-bold text-foreground mb-4">
+                    {item.title}
+                  </h3>
 
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
+                  <p className="text-base text-muted-foreground leading-relaxed flex-grow">
+                    {item.description}
+                  </p>
+
+                  <div className="flex items-center justify-between mt-6 pt-6 border-t border-border">
+                    <span className="text-sm text-muted-foreground">
+                      {index + 1} of {differentiators.length}
+                    </span>
+                  </div>
+                </div>
               </motion.div>
             );
           })}
+        </div>
+
+        <div className="flex justify-center gap-4 mt-12">
+          <Button
+            variant="outline"
+            onClick={() => setActiveIndex((prev) => Math.max(0, prev - 1))}
+            disabled={activeIndex === 0}
+          >
+            Previous
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() => setActiveIndex((prev) => Math.min(differentiators.length - 1, prev + 1))}
+            disabled={activeIndex === differentiators.length - 1}
+          >
+            Next
+          </Button>
         </div>
       </div>
     </section>

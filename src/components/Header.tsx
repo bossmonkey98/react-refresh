@@ -23,6 +23,7 @@ const Header = () => {
     { href: "#devices", label: "Devices" },
     { href: "#verticals", label: "Verticals" },
     { href: "#capabilities", label: "Capabilities" },
+    { href: "#why-partner", label: "Partner with SARD" },
     { href: "#connect", label: "Connect" },
   ];
 
