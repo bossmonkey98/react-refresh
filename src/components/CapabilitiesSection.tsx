@@ -1,5 +1,6 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useCountUp } from "@/hooks/use-count-up";
 
 const CapabilitiesSection = () => {
   const ref = useRef(null);
@@ -46,23 +47,31 @@ const CapabilitiesSection = () => {
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {capabilities.map((capability, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
-              transition={{ duration: 0.4, delay: index * 0.08 }}
-              whileHover={{ y: -8, scale: 1.05 }}
-              className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 shadow-strong"
-            >
-              <div className="text-4xl md:text-5xl font-bold text-white mb-3">
-                {capability.value}
-              </div>
-              <div className="text-sm text-white/90 leading-relaxed whitespace-pre-line">
-                {capability.label}
-              </div>
-            </motion.div>
-          ))}
+          {capabilities.map((capability, index) => {
+            const numericValue = parseFloat(capability.value.replace(/[^0-9.]/g, ''));
+            const hasDecimal = capability.value.includes('.');
+            const count = useCountUp({ end: numericValue, decimals: hasDecimal ? 1 : 0 });
+            const suffix = capability.value.replace(/[0-9.]/g, '');
+            
+            return (
+              <motion.div
+                key={index}
+                ref={count.ref}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.4, delay: index * 0.08 }}
+                whileHover={{ y: -8, scale: 1.05 }}
+                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20 hover:bg-white/20 transition-all duration-300 shadow-strong"
+              >
+                <div className="text-4xl md:text-5xl font-bold text-white mb-3">
+                  {count.count}{suffix}
+                </div>
+                <div className="text-sm text-white/90 leading-relaxed whitespace-pre-line">
+                  {capability.label}
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

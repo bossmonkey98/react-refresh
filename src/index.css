@@ -87,6 +87,32 @@ All colors MUST be HSL.
     50% { transform: translateY(-20px); }
   }
   
+  /* Ripple effect */
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+  
+  /* Icon pulse animation */
+  @keyframes icon-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+  }
+  
+  .animate-icon-pulse {
+    animation: icon-pulse 2s ease-in-out infinite;
+  }
+  
   .backdrop-blur-glass {
     backdrop-filter: blur(12px) saturate(180%);
     background-color: rgba(255, 255, 255, 0.75);

@@ -1,11 +1,12 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Users, FolderKanban, Building2, Code2 } from "lucide-react";
 
 const MetricsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [tiltStyle, setTiltStyle] = useState({});
 
   const metrics = [
     {
@@ -65,6 +66,26 @@ const MetricsSection = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
+                onMouseMove={(e) => {
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  const centerX = rect.width / 2;
+                  const centerY = rect.height / 2;
+                  const rotateX = (y - centerY) / 10;
+                  const rotateY = (centerX - x) / 10;
+                  setTiltStyle({
+                    transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+                    transition: "transform 0.1s ease-out"
+                  });
+                }}
+                onMouseLeave={() => {
+                  setTiltStyle({
+                    transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+                    transition: "transform 0.5s ease-out"
+                  });
+                }}
+                style={index === 0 ? tiltStyle : {}}
                 className="group relative bg-card rounded-2xl p-8 shadow-soft hover:shadow-strong transition-all duration-300 border border-border overflow-hidden"
               >
                 {/* Background Gradient */}

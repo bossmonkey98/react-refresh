@@ -1,10 +1,12 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Gamepad2, Tv, Camera, Headphones, Cpu, Glasses } from "lucide-react";
 
 const DomainsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [tiltStyle, setTiltStyle] = useState({});
 
   const domains = [
     {
@@ -85,6 +87,28 @@ const DomainsSection = () => {
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
+                onMouseMove={(e) => {
+                  setHoveredIndex(index);
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  const centerX = rect.width / 2;
+                  const centerY = rect.height / 2;
+                  const rotateX = (y - centerY) / 15;
+                  const rotateY = (centerX - x) / 15;
+                  setTiltStyle({
+                    transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+                    transition: "transform 0.1s ease-out"
+                  });
+                }}
+                onMouseLeave={() => {
+                  setHoveredIndex(null);
+                  setTiltStyle({
+                    transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+                    transition: "transform 0.5s ease-out"
+                  });
+                }}
+                style={hoveredIndex === index ? tiltStyle : {}}
                 className="bg-card rounded-2xl p-8 shadow-soft hover:shadow-strong transition-all duration-300 border border-border group"
               >
                 <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${domain.gradient} flex items-center justify-center mb-6 shadow-medium group-hover:scale-110 transition-transform duration-300`}>
