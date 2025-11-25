@@ -1,10 +1,12 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Rocket, Trophy, TrendingUp, Cloud, Award, Globe } from "lucide-react";
 
 const TimelineSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const navigate = useNavigate();
 
   const milestones = [
     {
@@ -71,7 +73,8 @@ const TimelineSection = () => {
                   {/* Content */}
                   <motion.div
                     whileHover={{ scale: 1.03 }}
-                    className={`w-full lg:w-5/12 bg-card rounded-2xl p-8 shadow-soft hover:shadow-medium transition-all duration-300 border border-border ${
+                    onClick={() => navigate(`/journey/${milestone.year}`)}
+                    className={`w-full lg:w-5/12 bg-card rounded-2xl p-8 shadow-soft hover:shadow-medium transition-all duration-300 border border-border cursor-pointer ${
                       isLeft ? "lg:text-right" : "lg:text-left"
                     } text-left`}
                   >
@@ -90,6 +93,9 @@ const TimelineSection = () => {
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
                       {milestone.description}
+                    </p>
+                    <p className="text-sm text-primary font-medium mt-4">
+                      Click to learn more →
                     </p>
                   </motion.div>
 
