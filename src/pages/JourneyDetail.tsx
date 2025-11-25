@@ -4,6 +4,7 @@ import { ArrowLeft, Users, Target, Lightbulb, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { useCountUp } from "@/hooks/use-count-up";
 
 const JourneyDetail = () => {
   const { year } = useParams();
@@ -171,9 +172,14 @@ const JourneyDetail = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
               {data.metrics.map((metric: any, index: number) => {
                 const Icon = metric.icon;
+                const numericValue = parseFloat(metric.value.replace(/[^0-9.]/g, ''));
+                const suffix = metric.value.replace(/[0-9.]/g, '');
+                const count = useCountUp({ end: numericValue });
+                
                 return (
                   <motion.div
                     key={index}
+                    ref={count.ref}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -183,7 +189,7 @@ const JourneyDetail = () => {
                       <Icon className="w-6 h-6 text-white" />
                     </div>
                     <div className="text-3xl font-bold text-primary mb-2">
-                      {metric.value}
+                      {count.count}{suffix}
                     </div>
                     <div className="text-sm text-muted-foreground uppercase">
                       {metric.label}

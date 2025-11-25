@@ -1,10 +1,13 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Gamepad2, Tv, Camera, Focus, Glasses, Headphones, Cpu, Smartphone } from "lucide-react";
+import { useCountUp } from "@/hooks/use-count-up";
 
 const DeviceExcellence = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [tiltStyle, setTiltStyle] = useState({});
 
   const devices = [
     { icon: Gamepad2, name: "PlayStation Consoles", engineers: "120+", color: "from-blue-500 to-purple-500" },
@@ -37,17 +40,43 @@ const DeviceExcellence = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
           {devices.map((device, index) => {
             const Icon = device.icon;
+            const engineerCount = parseInt(device.engineers.replace('+', ''));
+            const count = useCountUp({ end: engineerCount });
+            
             return (
               <motion.div
                 key={index}
+                ref={count.ref}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.4, delay: index * 0.08 }}
                 whileHover={{ y: -8, scale: 1.05 }}
+                onMouseMove={(e) => {
+                  setHoveredIndex(index);
+                  const rect = e.currentTarget.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+                  const centerX = rect.width / 2;
+                  const centerY = rect.height / 2;
+                  const rotateX = (y - centerY) / 15;
+                  const rotateY = (centerX - x) / 15;
+                  setTiltStyle({
+                    transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`,
+                    transition: "transform 0.1s ease-out"
+                  });
+                }}
+                onMouseLeave={() => {
+                  setHoveredIndex(null);
+                  setTiltStyle({
+                    transform: "perspective(1000px) rotateX(0deg) rotateY(0deg)",
+                    transition: "transform 0.5s ease-out"
+                  });
+                }}
+                style={hoveredIndex === index ? tiltStyle : {}}
                 className="bg-card rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300 border border-border text-center group"
               >
                 <motion.div
-                  whileHover={{ rotate: 360 }}
+                  whileHover={{ rotate: 360, scale: 1.1 }}
                   transition={{ duration: 0.6 }}
                   className={`w-16 h-16 mx-auto rounded-xl bg-gradient-to-br ${device.color} flex items-center justify-center mb-4 shadow-soft`}
                 >
@@ -59,7 +88,7 @@ const DeviceExcellence = () => {
                 </h3>
 
                 <div className="text-3xl font-bold text-primary mb-1">
-                  {device.engineers}
+                  {count.count}+
                 </div>
                 <div className="text-xs text-muted-foreground uppercase tracking-wide">
                   Engineers

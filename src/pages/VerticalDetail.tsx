@@ -1,10 +1,11 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft, Users, Briefcase, Clock, Trophy, Target, Zap } from "lucide-react";
+import { ArrowLeft, Users, FolderKanban, Clock, Trophy, Target, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { AnimatedNumber } from "@/components/AnimatedNumber";
 
 const VerticalDetail = () => {
   const { vertical } = useParams();
@@ -256,9 +257,7 @@ const VerticalDetail = () => {
                 className="bg-card rounded-2xl p-8 border border-border shadow-soft text-center"
               >
                 <Users className="w-12 h-12 mx-auto mb-4 text-primary" />
-                <div className="text-4xl font-bold text-primary mb-2">
-                  {data.engineers}
-                </div>
+                <AnimatedNumber value={data.engineers} suffix="+" />
                 <div className="text-sm text-muted-foreground uppercase">
                   Engineers
                 </div>
@@ -270,10 +269,8 @@ const VerticalDetail = () => {
                 transition={{ duration: 0.5, delay: 0.1 }}
                 className="bg-card rounded-2xl p-8 border border-border shadow-soft text-center"
               >
-                <Briefcase className="w-12 h-12 mx-auto mb-4 text-primary" />
-                <div className="text-4xl font-bold text-primary mb-2">
-                  {data.projects}
-                </div>
+                <FolderKanban className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <AnimatedNumber value={data.projects} suffix="+" />
                 <div className="text-sm text-muted-foreground uppercase">
                   Active Projects
                 </div>
@@ -286,9 +283,7 @@ const VerticalDetail = () => {
                 className="bg-card rounded-2xl p-8 border border-border shadow-soft text-center"
               >
                 <Clock className="w-12 h-12 mx-auto mb-4 text-primary" />
-                <div className="text-4xl font-bold text-primary mb-2">
-                  {data.experience}
-                </div>
+                <AnimatedNumber value={data.experience} suffix="+" />
                 <div className="text-sm text-muted-foreground uppercase">
                   Years Experience
                 </div>

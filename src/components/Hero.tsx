@@ -1,8 +1,14 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCountUp } from "@/hooks/use-count-up";
 
 const Hero = () => {
+  const engineersCount = useCountUp({ end: 450 });
+  const projectsCount = useCountUp({ end: 15 });
+  const verticalsCount = useCountUp({ end: 5 });
+  const domainsCount = useCountUp({ end: 8 });
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-dark via-primary to-primary-light">
       {/* Geometric Pattern Background */}
@@ -94,23 +100,46 @@ const Hero = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-8 mt-20"
           >
-            {[
-              { value: "450+", label: "Engineers" },
-              { value: "15+", label: "Active Projects" },
-              { value: "5", label: "Sony Verticals" },
-              { value: "8", label: "Technology Domains" },
-            ].map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.8 + index * 0.1 }}
-                className="text-center"
-              >
-                <div className="text-4xl md:text-5xl font-bold text-white mb-2">{stat.value}</div>
-                <div className="text-sm text-white/80 uppercase tracking-wider">{stat.label}</div>
-              </motion.div>
-            ))}
+            <motion.div
+              ref={engineersCount.ref}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8 }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-bold text-white mb-2">{engineersCount.count}+</div>
+              <div className="text-sm text-white/80 uppercase tracking-wider">Engineers</div>
+            </motion.div>
+            <motion.div
+              ref={projectsCount.ref}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.9 }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-bold text-white mb-2">{projectsCount.count}+</div>
+              <div className="text-sm text-white/80 uppercase tracking-wider">Active Projects</div>
+            </motion.div>
+            <motion.div
+              ref={verticalsCount.ref}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.0 }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-bold text-white mb-2">{verticalsCount.count}</div>
+              <div className="text-sm text-white/80 uppercase tracking-wider">Sony Verticals</div>
+            </motion.div>
+            <motion.div
+              ref={domainsCount.ref}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.1 }}
+              className="text-center"
+            >
+              <div className="text-4xl md:text-5xl font-bold text-white mb-2">{domainsCount.count}</div>
+              <div className="text-sm text-white/80 uppercase tracking-wider">Technology Domains</div>
+            </motion.div>
           </motion.div>
         </motion.div>
       </div>
